@@ -1,0 +1,41 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/black_primary</item>
+        <item name="colorAccent">@color/black_secondary</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <attr name="fontPath" format="string" />
+
+    <style name="basic_font">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="roboto_Regular" parent="basic_font">
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+
+    <style name="roboto_Black" parent="basic_font">
+        <item name="fontPath">fonts/Roboto-Black.ttf</item>
+    </style>
+
+    <style name="roboto_Bold" parent="basic_font">
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+
+    <style name="roboto_Medium" parent="basic_font">
+        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+
+    <style name="roboto_Thin" parent="basic_font">
+        <item name="fontPath">fonts/Roboto-Thin.ttf</item>
+    </style>
+
+
+</resources>
