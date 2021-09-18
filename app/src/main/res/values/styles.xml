@@ -52,4 +52,19 @@
         <item name="android:textColor">@color/gray_text</item>
     </style>
 
+    <style name="movie_title" parent="roboto_Bold">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="rating_text" parent="roboto_Bold">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/rating</item>
+    </style>
+
+    <style name="favorite_text" parent="roboto_Regular">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/favorite</item>
+    </style>
+
 </resources>
