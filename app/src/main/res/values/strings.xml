@@ -3,6 +3,7 @@
 
     <string name="main_header_morning">Good Morning</string>
     <string name="main_header_afternoon">Good Afternoon</string>
+    <string name="main_header_evening">Good Evening</string>
     <string name="main_popular_title">Popular</string>
     <string name="main_popular_subtitle">Highly-rated, highly-anticipated and most watched movies to discover.</string>
     <string name="main_search_hint">Search for movies by name…</string>

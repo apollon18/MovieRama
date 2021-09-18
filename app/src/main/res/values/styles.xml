@@ -37,7 +37,11 @@
         <item name="fontPath">fonts/Roboto-Thin.ttf</item>
     </style>
 
-    <style name="header" parent="roboto_Black">
+    <style name="inter_extra" parent="basic_font">
+        <item name="fontPath">fonts/Inter-ExtraBold.ttf</item>
+    </style>
+
+    <style name="header" parent="inter_extra">
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/white</item>
     </style>

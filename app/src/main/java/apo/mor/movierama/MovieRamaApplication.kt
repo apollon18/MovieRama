@@ -5,10 +5,6 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 
-/**
- * Created by amoropoulos on 17/9/21.
- */
-
 class MovieRamaApplication : MultiDexApplication() {
 
     override fun onCreate() {

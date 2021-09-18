@@ -11,10 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by amoropoulos on 17/9/21.
- */
-
 class RestClient {
 
     companion object {
