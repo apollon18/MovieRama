@@ -9,6 +9,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import apo.mor.movierama.Listeners.MovieListListener
 import apo.mor.movierama.Models.MovieModel
+import apo.mor.movierama.R
+import apo.mor.movierama.Utils.GeneralUtils
 import apo.mor.movierama.databinding.ListItemMainMovieBinding
 import com.makeramen.roundedimageview.RoundedImageView
 
@@ -26,8 +28,13 @@ class MoviesListAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val movie = movieList?.get(holder.absoluteAdapterPosition)
         val viewHolder = holder as ViewHolderMovieList
-        viewHolder.movieTitle.text = movie?.title
-        viewHolder.movieRating.text = movie?.vote_count.toString()
+        viewHolder.movieTitle.text = GeneralUtils.getDifferentStyleText(context, movie?.title ?: "", GeneralUtils.getYearFromDate(movie?.release_date ?: ""))
+        viewHolder.movieRating.text = String.format("%.2f", movie?.vote_average.toString())
+        if (GeneralUtils.isMovieFavorite(context, movie?.id?.toString()?: "")) {
+            viewHolder.favoriteText.text = context.resources.getString(R.string.added_to_favorites_text)
+            viewHolder.favoriteText.setTextColor(context.resources.getColor(R.color.favorite))
+            viewHolder.favoriteIcon.setImageDrawable(context.resources.getDrawable(R.drawable.favorites_icon))
+        }
     }
 
     override fun getItemCount(): Int {

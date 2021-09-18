@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import apo.mor.movierama.Adapters.MoviesListAdapter
 import apo.mor.movierama.Listeners.MovieListListener
 import apo.mor.movierama.Utils.GeneralUtils
@@ -32,7 +31,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     private var binding: ActivityMainListBinding? = null
     private var popularList: ArrayList<MovieModel> = ArrayList()
     private var searchList: ArrayList<MovieModel> = ArrayList()
-    private var listAdapter:  MoviesListAdapter? = null
+    private var listAdapter: MoviesListAdapter? = null
     private var isLoading: Boolean = false
     private var isSearchList: Boolean = false
     private var searchText: String = ""
@@ -47,7 +46,10 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         setContentView(binding?.root)
 
         binding?.headerText?.text = GeneralUtils.getHeaderText(this@MainListActivity)
-        popularList = Gson().fromJson(intent.getStringExtra("list"), object : TypeToken<ArrayList<MovieModel>>(){}.type)
+        popularList = Gson().fromJson(
+            intent.getStringExtra("list"),
+            object : TypeToken<ArrayList<MovieModel>>() {}.type
+        )
         setUpList(page = 1)
         setUpSearch()
 //        setUpSwipeToRefresh()
@@ -56,8 +58,8 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     private fun setUpList(page: Int) {
         val layoutManager = LinearLayoutManager(this@MainListActivity)
         binding?.mainList?.layoutManager = layoutManager
-        listAdapter =  MoviesListAdapter(this@MainListActivity,  popularList,  this@MainListActivity)
-        binding?.mainList?.adapter =  listAdapter
+        listAdapter = MoviesListAdapter(this@MainListActivity, popularList, this@MainListActivity)
+        binding?.mainList?.adapter = listAdapter
         addOnScrollListener(page = page)
     }
 
@@ -70,11 +72,12 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                 if (s?.isNotEmpty() == true) {
                     isSearchList = true
                     searchText = s.toString()
+                    addOnScrollListener(page = 1)
                     getNextPage(page = 1)
                 } else {
                     isSearchList = false
                     binding?.popularTextLayout?.visibility = View.VISIBLE
-                    getNextPage(page = 1)
+                    setUpList(page = 1)
                 }
             }
         }
@@ -83,7 +86,8 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
 
         binding?.searchLayout?.setOnClickListener {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
-                InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+                InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY
+            )
             binding?.searchText?.requestFocus()
         }
     }
@@ -146,26 +150,31 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     }
 
     private fun callSearchList(page: Int) {
-        ServiceCalls.getSearchResults(page = page, searchText = searchText, callback = object : Callback<ResultModel> {
-            override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
-                searchList.clear()
-                searchList.addAll(response.body()?.results as ArrayList<MovieModel>)
-                if (page == 1) {
-                    listAdapter?.replaceList(searchList)
-                } else {
-                    listAdapter?.notifyItemRangeInserted((page - 1) * 20, page * 20)
-                    addOnScrollListener(page = page)
+        ServiceCalls.getSearchResults(
+            page = page,
+            searchText = searchText,
+            callback = object : Callback<ResultModel> {
+                override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
+                    if (page <= response.body()?.total_pages ?: 1) {
+                        searchList.clear()
+                        searchList.addAll(response.body()?.results as ArrayList<MovieModel>)
+                        if (page == 1) {
+                            listAdapter?.replaceList(searchList)
+                        } else {
+                            listAdapter?.notifyItemRangeInserted((page - 1) * 20, page * 20)
+                            addOnScrollListener(page = page)
+                        }
+                    }
+                    binding?.progressBar?.visibility = View.GONE
+                    binding?.popularTextLayout?.visibility = View.GONE
+                    isLoading = false
                 }
-                binding?.progressBar?.visibility = View.GONE
-                binding?.popularTextLayout?.visibility = View.GONE
-                isLoading = false
-            }
 
-            override fun onFailure(call: Call<ResultModel>, t: Throwable) {
-                binding?.progressBar?.visibility = View.GONE
-                isLoading = false
-            }
-        })
+                override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                    binding?.progressBar?.visibility = View.GONE
+                    isLoading = false
+                }
+            })
     }
 
     override fun onMovieSelected() {
