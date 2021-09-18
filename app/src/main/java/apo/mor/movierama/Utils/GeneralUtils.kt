@@ -1,6 +1,7 @@
-package apo.mor.movierama
+package apo.mor.movierama.Utils
 
 import android.content.Context
+import apo.mor.movierama.R
 import java.util.*
 
 /**

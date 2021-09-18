@@ -97,6 +97,7 @@
                         tools:text="Added to Favorites" />
 
                     <ImageView
+                        android:id="@+id/favorite_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
