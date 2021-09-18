@@ -11,6 +11,7 @@ import apo.mor.movierama.Listeners.MovieListListener
 import apo.mor.movierama.Models.MovieModel
 import apo.mor.movierama.R
 import apo.mor.movierama.Utils.GeneralUtils
+import apo.mor.movierama.Utils.SharedPreferenceUtil
 import apo.mor.movierama.databinding.ListItemMainMovieBinding
 import com.makeramen.roundedimageview.RoundedImageView
 
@@ -29,11 +30,32 @@ class MoviesListAdapter (
         val movie = movieList?.get(holder.absoluteAdapterPosition)
         val viewHolder = holder as ViewHolderMovieList
         viewHolder.movieTitle.text = GeneralUtils.getDifferentStyleText(context, movie?.title ?: "", GeneralUtils.getYearFromDate(movie?.release_date ?: ""))
-        viewHolder.movieRating.text = String.format("%.2f", movie?.vote_average.toString())
+        viewHolder.movieRating.text = movie?.vote_average.toString()
+        setFavoriteStatus(context, viewHolder, movie)
+        setFavoriteAction(viewHolder, movie, position)
+        viewHolder.itemLayout.setOnClickListener { listener.onMovieSelected(movie?.id?.toString()?: "") }
+    }
+
+    private fun setFavoriteStatus(context: Context, viewHolder: ViewHolderMovieList, movie: MovieModel?) {
         if (GeneralUtils.isMovieFavorite(context, movie?.id?.toString()?: "")) {
             viewHolder.favoriteText.text = context.resources.getString(R.string.added_to_favorites_text)
             viewHolder.favoriteText.setTextColor(context.resources.getColor(R.color.favorite))
             viewHolder.favoriteIcon.setImageDrawable(context.resources.getDrawable(R.drawable.favorites_icon))
+        } else {
+            viewHolder.favoriteText.text = context.resources.getString(R.string.add_to_favorites_text)
+            viewHolder.favoriteText.setTextColor(context.resources.getColor(R.color.gray_text))
+            viewHolder.favoriteIcon.setImageDrawable(context.resources.getDrawable(R.drawable.favorite_not_icon))
+        }
+    }
+
+    private fun setFavoriteAction(viewHolder: ViewHolderMovieList, movie: MovieModel?, position: Int) {
+        viewHolder.favoriteIcon.setOnClickListener {
+            if (GeneralUtils.isMovieFavorite(context, movie?.id?.toString()?: "")) {
+                SharedPreferenceUtil.removeMovieFromFavorites(context, movie?.id?.toString()?: "")
+            } else {
+                SharedPreferenceUtil.saveMovieToFavorites(context, movie?.id?.toString()?: "")
+            }
+            notifyItemChanged(position)
         }
     }
 

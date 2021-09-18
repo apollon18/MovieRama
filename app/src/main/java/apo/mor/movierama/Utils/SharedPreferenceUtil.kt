@@ -60,5 +60,15 @@ class SharedPreferenceUtil {
             newList.add(id)
             saveSharedPreference(context, Gson().toJson((newList)), favoriteMoviesIds)
         }
+
+        fun removeMovieFromFavorites(context: Context, id: String) {
+            val newList: ArrayList<String> = ArrayList()
+            val existingList = getFavoriteMoviesId(context)
+            if (existingList.isNotEmpty()) {
+                existingList.removeIf { it == id }
+            }
+            newList.addAll(existingList)
+            saveSharedPreference(context, Gson().toJson((newList)), favoriteMoviesIds)
+        }
     }
 }

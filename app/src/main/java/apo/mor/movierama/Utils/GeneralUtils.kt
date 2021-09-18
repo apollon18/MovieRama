@@ -12,11 +12,7 @@ import io.github.inflationx.calligraphy3.TypefaceUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by amoropoulos on 18/9/21.
- */
 class GeneralUtils {
-
 
     companion object {
 
@@ -32,6 +28,9 @@ class GeneralUtils {
         }
 
         fun getYearFromDate(dateString: String) : String {
+            if (dateString.isEmpty()) {
+                return ""
+            }
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             val date = sdf.parse(dateString)
             val cal = Calendar.getInstance()
@@ -76,8 +75,9 @@ class GeneralUtils {
         private fun getSpecificSpan(context: Context, weight: TypographyWeights) : CalligraphyTypefaceSpan {
             return when (weight) {
                 Bold -> CalligraphyTypefaceSpan(
-                    TypefaceUtils.load(context.assets, "fonts/Roboto_Bold.ttf")
+                    TypefaceUtils.load(context.assets, "fonts/Roboto-Bold.ttf")
                 )
+
                 Regular -> CalligraphyTypefaceSpan(
                     TypefaceUtils.load(context.assets, "fonts/Roboto-Regular.ttf")
                 )

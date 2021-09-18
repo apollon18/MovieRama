@@ -177,9 +177,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
             })
     }
 
-    override fun onMovieSelected() {
-    }
+    override fun onMovieSelected(id: String) {
 
-    override fun onFavoriteClicked() {
     }
 }
