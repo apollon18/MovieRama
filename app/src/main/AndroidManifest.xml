@@ -39,5 +39,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity
+            android:name="apo.mor.movierama.Activities.MovieDetailsActivity"
+            android:launchMode="singleTop"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

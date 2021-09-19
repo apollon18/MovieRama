@@ -1,6 +1,7 @@
 package apo.mor.movierama.Activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -178,6 +179,8 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     }
 
     override fun onMovieSelected(id: String) {
-
+        val mainListIntent = Intent(this@MainListActivity, MovieDetailsActivity::class.java)
+        mainListIntent.putExtra("id", id)
+        startActivity(mainListIntent)
     }
 }
