@@ -2,9 +2,6 @@ package apo.mor.movierama.Models
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by amoropoulos on 18/9/21.
- */
 data class ReviewResult (
 
     @SerializedName("id")

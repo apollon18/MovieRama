@@ -78,7 +78,7 @@ class GeneralUtils {
             view?.let {
                 view.visibility = View.VISIBLE
                 val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
-                animate.duration = 700L
+                animate.duration = 500L
                 animate.interpolator = DecelerateInterpolator()
                 animate.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {

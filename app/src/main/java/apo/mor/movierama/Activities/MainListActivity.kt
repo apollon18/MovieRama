@@ -1,9 +1,9 @@
 package apo.mor.movierama.Activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -26,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_main_list.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainListActivity : AppCompatActivity(), MovieListListener {
@@ -71,17 +73,13 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            var handler: Handler = Handler()
+            var workRunnable: Runnable? = null
             override fun afterTextChanged(s: Editable?) {
-                if (s?.isNotEmpty() == true) {
-                    isSearchList = true
-                    searchText = s.toString()
-                    addOnScrollListener(page = 1)
-                    getNextPage(page = 1)
-                } else {
-                    isSearchList = false
-                    binding?.popularTextLayout?.visibility = View.VISIBLE
-                    getNextPage(page = 1)
-                }
+                workRunnable?.let { handler.removeCallbacks(it) }
+                workRunnable = Runnable { checkTextChange(s) }
+                workRunnable?.let { handler.postDelayed(it, 400) }
             }
         }
         binding?.searchText?.addTextChangedListener(textWatcher)
@@ -92,6 +90,19 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                 InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY
             )
             binding?.searchText?.requestFocus()
+        }
+    }
+
+    private fun checkTextChange(s: Editable?) {
+        if (s?.isNotEmpty() == true) {
+            isSearchList = true
+            searchText = s.toString()
+            addOnScrollListener(page = 1)
+            getNextPage(page = 1)
+        } else {
+            isSearchList = false
+            binding?.popularTextLayout?.visibility = View.VISIBLE
+            getNextPage(page = 1)
         }
     }
 
