@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by amoropoulos on 18/9/21.
  */
-data class ReviewModel(
+data class ReviewResult (
 
     @SerializedName("id")
     val id : Int,
@@ -14,7 +14,7 @@ data class ReviewModel(
     val page : Int,
 
     @SerializedName("results")
-    val results : ArrayList<ReviewResult>,
+    val results : ArrayList<ReviewModel>,
 
     @SerializedName("total_pages")
     val total_pages : Int,
@@ -23,7 +23,7 @@ data class ReviewModel(
     val total_results : Int
 )
 
-data class ReviewResult (
+data class ReviewModel (
 
     @SerializedName("author")
     val author : String,

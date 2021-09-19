@@ -86,7 +86,7 @@ data class Genres (
 data class Credits (
 
     @SerializedName("cast")
-    val cast : List<Cast>,
+    val cast : ArrayList<Cast>,
 )
 
 data class Cast (
@@ -125,5 +125,8 @@ data class Cast (
     val credit_id : String,
 
     @SerializedName("order")
-    val order : Int
+    val order : Int,
+
+    @SerializedName("job")
+    val job : String
 )

@@ -78,7 +78,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                 } else {
                     isSearchList = false
                     binding?.popularTextLayout?.visibility = View.VISIBLE
-                    setUpList(page = 1)
+                    getNextPage(page = 1)
                 }
             }
         }
@@ -100,7 +100,11 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                 binding?.swipeLayout?.isRefreshing = true
                 isSearchList = false
                 binding?.popularTextLayout?.visibility = View.VISIBLE
-                getNextPage(page = 1)
+                if (binding?.searchText?.text?.isNotEmpty() == true) {
+                    binding?.searchText?.text?.clear()
+                } else {
+                    getNextPage(page = 1)
+                }
             }
         }
     }
@@ -134,10 +138,13 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     private fun callPopularList(page: Int) {
         ServiceCalls.getPopularMovieList(page = page, callback = object : Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
-                popularList.addAll(response.body()?.results as ArrayList<MovieModel>)
                 if (page == 1) {
-                    listAdapter?.replaceList(popularList)
+                    popularList.clear()
+                    popularList.addAll(response.body()?.results as ArrayList<MovieModel>)
+                    listAdapter?.notifyDataSetChanged()
+                    binding?.listScrollview?.fullScroll(View.FOCUS_UP)
                 } else {
+                    popularList.addAll(response.body()?.results as ArrayList<MovieModel>)
                     listAdapter?.notifyItemRangeInserted((page - 1) * 20, page * 20)
                     addOnScrollListener(page = page)
                 }
@@ -163,6 +170,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                         searchList.addAll(response.body()?.results as ArrayList<MovieModel>)
                         if (page == 1) {
                             listAdapter?.replaceList(searchList)
+                            binding?.listScrollview?.fullScroll(View.FOCUS_UP)
                         } else {
                             listAdapter?.notifyItemRangeInserted((page - 1) * 20, page * 20)
                             addOnScrollListener(page = page)

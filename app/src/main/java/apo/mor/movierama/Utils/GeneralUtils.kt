@@ -1,10 +1,13 @@
 package apo.mor.movierama.Utils
 
 import android.content.Context
+import apo.mor.movierama.Models.Cast
 
 import apo.mor.movierama.R
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class GeneralUtils {
 
@@ -39,5 +42,24 @@ class GeneralUtils {
             }
             return false
         }
+
+        fun getDirectorName(cast: ArrayList<Cast>) : String {
+            for (people in cast) {
+                if (people.job == "Director")
+                    return people.name
+            }
+            return ""
+        }
+
+        fun getTopBilledCast(cast: ArrayList<Cast>?) : ArrayList<Cast> {
+            val topCast : ArrayList<Cast> = ArrayList()
+            try {
+                cast?.subList(0, 5)?.let { topCast.addAll(it) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return topCast
+        }
+
     }
 }

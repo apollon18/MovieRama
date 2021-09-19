@@ -52,9 +52,9 @@ class ServiceCalls {
             })
         }
 
-        fun getMovieDetails(movieId: Int, callback: Callback<MovieDetailsModel>) {
+        fun getMovieDetails(movieId: String, callback: Callback<MovieDetailsModel>) {
             val call: Call<MovieDetailsModel?>? = RestClient.REST_CLIENT?.getMovieDetails(
-                movieId.toString(),
+                movieId,
                 ApiConstants.API_KEY,
                 ApiConstants.LANGUAGE,
                 "credits"
@@ -73,9 +73,9 @@ class ServiceCalls {
             })
         }
 
-        fun getMovieReviews(movieId: Int, callback: Callback<ReviewResult>) {
+        fun getMovieReviews(movieId: String, callback: Callback<ReviewResult>) {
             val call: Call<ReviewResult?>? = RestClient.REST_CLIENT?.getMovieReviews(
-                movieId.toString(), "reviews",
+                movieId, "reviews",
                 ApiConstants.API_KEY,
                 ApiConstants.LANGUAGE,
                 "1"
@@ -94,9 +94,9 @@ class ServiceCalls {
             })
         }
 
-        fun getSimilarMovies(movieId: Int, callback: Callback<ResultModel>) {
+        fun getSimilarMovies(movieId: String, callback: Callback<ResultModel>) {
             val call: Call<ResultModel?>? = RestClient.REST_CLIENT?.getSimilarMovies(
-                movieId.toString(), "similar",
+                movieId, "similar",
                 ApiConstants.API_KEY,
                 ApiConstants.LANGUAGE,
                 "1"

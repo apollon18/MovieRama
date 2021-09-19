@@ -33,7 +33,7 @@ interface ApiCalls {
         @Query("append_to_response") credits: String?
     ) : Call<MovieDetailsModel?>?
 
-    @GET(ApiConstants.TMDB_BASE_URL + "{movie_id}" + "{reviews}")
+    @GET(ApiConstants.TMDB_BASE_URL + "{movie_id}" + "/" + "{reviews}")
     fun getMovieReviews(
         @Path("movie_id") movieId: String?,
         @Path("reviews") reviews: String?,
@@ -42,7 +42,7 @@ interface ApiCalls {
         @Query("page") page: String?
     ) : Call<ReviewResult?>?
 
-    @GET(ApiConstants.TMDB_BASE_URL + "{movie_id}" + "{similar}")
+    @GET(ApiConstants.TMDB_BASE_URL + "{movie_id}" + "/" + "{similar}")
     fun getSimilarMovies(
         @Path("movie_id") movieId: String?,
         @Path("similar") similar: String?,
