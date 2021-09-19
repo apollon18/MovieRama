@@ -37,7 +37,7 @@ private var movieList: ArrayList<MovieModel>?,
         val viewHolder = holder as ViewHolderSimilarMovieList
         viewHolder.movieTitle.text = movie?.title
         viewHolder.movieYear.text = GeneralUtils.getYearFromDate(movie?.release_date ?: "")
-        viewHolder.movieRating.text = movie?.vote_average.toString()
+        viewHolder.movieRating.text = GeneralUtils.getRatingToOneDecimal(movie?.vote_average?: 0.0).toString()
         setMovieImage(context, viewHolder, movie)
         setFavoriteStatus(context, viewHolder, movie)
     }
@@ -48,7 +48,7 @@ private var movieList: ArrayList<MovieModel>?,
         movie: MovieModel?
     ) {
         val options =
-            RequestOptions().centerCrop().placeholder(R.drawable.placeholder_similar_movie).error(R.drawable.placeholder_similar_movie)
+            RequestOptions().placeholder(R.drawable.placeholder_similar_movie).error(R.drawable.placeholder_similar_movie)
         Glide.with(context).load(ApiConstants.IMAGES_POSTER_BASE_URL + movie?.poster_path)
             .apply(options).into(viewHolder.moviePoster)
     }

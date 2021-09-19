@@ -5,6 +5,8 @@ import apo.mor.movierama.Models.Cast
 
 import apo.mor.movierama.R
 import java.lang.Exception
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -61,5 +63,10 @@ class GeneralUtils {
             return topCast
         }
 
+        fun getRatingToOneDecimal(rating: Double): Double {
+            val df = DecimalFormat("#.#")
+            df.roundingMode = RoundingMode.CEILING
+            return df.format(rating).toDouble()
+        }
     }
 }

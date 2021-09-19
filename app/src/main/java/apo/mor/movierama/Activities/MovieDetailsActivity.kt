@@ -3,6 +3,7 @@ package apo.mor.movierama.Activities
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import apo.mor.movierama.Adapters.CastAdapter
@@ -17,6 +18,9 @@ import apo.mor.movierama.Utils.SharedPreferenceUtil
 import apo.mor.movierama.databinding.ActivityMovieDetailsBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +46,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         movieId = intent.getStringExtra("id")
         if (movieId?.isEmpty() == true) {
@@ -65,7 +72,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             ) {
                 movieDetails = response.body()
                 updateBasicUi()
-                binding?.loadingLayout?.root?.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<MovieDetailsModel>, t: Throwable) {
@@ -77,17 +83,18 @@ class MovieDetailsActivity : AppCompatActivity() {
     private fun updateBasicUi() {
         binding?.closeButton?.setOnClickListener { finish() }
         binding?.movieTitleText?.text = movieDetails?.title
-        binding?.reviewsText?.text = movieDetails?.vote_average.toString()
+        binding?.ratingNumber?.text = movieDetails?.vote_average.toString()
         binding?.movieDescription?.text = movieDetails?.overview
         setMoviePoster()
         setMovieCast()
         setMovieGenres()
         setFavoriteStatus()
+        binding?.loadingLayout?.root?.visibility = View.GONE
     }
 
     private fun setMoviePoster() {
         val options =
-            RequestOptions().centerCrop().placeholder(R.drawable.placeholder_movie_details).error(R.drawable.placeholder_movie_details)
+            RequestOptions().placeholder(R.drawable.placeholder_movie_details).error(R.drawable.placeholder_movie_details)
         binding?.moviePosterImage?.let {
             Glide.with(this@MovieDetailsActivity).load(ApiConstants.IMAGES_POSTER_BASE_URL + movieDetails?.poster_path)
                 .apply(options).into(it)
@@ -122,7 +129,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         if (genresList?.isEmpty() == true) {
             binding?.genreList?.visibility = View.GONE
         } else {
-            val layoutManager = LinearLayoutManager(this@MovieDetailsActivity, LinearLayoutManager.HORIZONTAL, false)
+            val layoutManager = FlexboxLayoutManager(this@MovieDetailsActivity)
+            layoutManager.flexDirection = FlexDirection.ROW
+            layoutManager.justifyContent = JustifyContent.FLEX_START
             binding?.genreList?.layoutManager = layoutManager
             genresAdapter = GenresAdapter(genresList as ArrayList<Genres>?)
             binding?.genreList?.adapter = genresAdapter

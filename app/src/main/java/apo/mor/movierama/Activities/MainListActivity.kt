@@ -1,5 +1,6 @@
 package apo.mor.movierama.Activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -36,6 +37,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     private var isLoading: Boolean = false
     private var isSearchList: Boolean = false
     private var searchText: String = ""
+    private var movieSelectedPosition: Int? = 0
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase?.let { ViewPumpContextWrapper.wrap(it) })
@@ -188,9 +190,17 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
             })
     }
 
-    override fun onMovieSelected(id: String) {
+    override fun onMovieSelected(id: String, position: Int) {
+        movieSelectedPosition = position
         val mainListIntent = Intent(this@MainListActivity, MovieDetailsActivity::class.java)
         mainListIntent.putExtra("id", id)
-        startActivity(mainListIntent)
+        startActivityForResult(mainListIntent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0) {
+            movieSelectedPosition?.let { listAdapter?.notifyItemChanged(it) }
+        }
     }
 }

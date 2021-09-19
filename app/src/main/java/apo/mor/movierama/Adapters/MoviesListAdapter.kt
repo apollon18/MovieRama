@@ -47,7 +47,8 @@ class MoviesListAdapter(
         setFavoriteAction(viewHolder, movie, position)
         viewHolder.itemLayout.setOnClickListener {
             listener.onMovieSelected(
-                movie?.id?.toString() ?: ""
+                movie?.id?.toString() ?: "",
+                position
             )
         }
     }
@@ -58,7 +59,7 @@ class MoviesListAdapter(
         movie: MovieModel?
     ) {
         val options =
-            RequestOptions().centerCrop().placeholder(R.drawable.placeholder_movie_list).error(R.drawable.placeholder_movie_list)
+            RequestOptions().placeholder(R.drawable.placeholder_movie_list).error(R.drawable.placeholder_movie_list)
         Glide.with(context).load(ApiConstants.IMAGES_BACKDROP_BASE_URL + movie?.backdrop_path)
             .apply(options).into(viewHolder.moviePoster)
     }
