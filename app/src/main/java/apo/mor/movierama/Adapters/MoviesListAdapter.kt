@@ -17,6 +17,7 @@ import apo.mor.movierama.databinding.ListItemMainMovieBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.makeramen.roundedimageview.RoundedImageView
+import kotlin.collections.ArrayList
 
 
 class MoviesListAdapter(
@@ -38,11 +39,8 @@ class MoviesListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val movie = movieList?.get(holder.absoluteAdapterPosition)
         val viewHolder = holder as ViewHolderMovieList
-        viewHolder.movieTitle.text = GeneralUtils.getDifferentStyleText(
-            context,
-            movie?.title ?: "",
-            GeneralUtils.getYearFromDate(movie?.release_date ?: "")
-        )
+        viewHolder.movieTitle.text = movie?.title
+        viewHolder.movieYear.text = GeneralUtils.getYearFromDate(movie?.release_date ?: "")
         viewHolder.movieRating.text = movie?.vote_average.toString()
         setMovieImage(context, viewHolder, movie)
         setFavoriteStatus(context, viewHolder, movie)
@@ -111,6 +109,7 @@ class MoviesListAdapter(
     class ViewHolderMovieList(binding: ListItemMainMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var movieTitle: TextView = binding.movieTitle
+        var movieYear: TextView = binding.yearText
         var moviePoster: RoundedImageView = binding.moviePoster
         var movieRating: TextView = binding.ratingNumber
         var favoriteText: TextView = binding.favoriteText

@@ -25,7 +25,8 @@
                 android:id="@+id/movie_poster"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholer_movie_list"
                 app:riv_corner_radius_bottom_left="0dp"
                 app:riv_corner_radius_bottom_right="0dp"
                 app:riv_corner_radius_top_left="12dp"
@@ -54,13 +55,25 @@
                     app:autoSizeTextType="uniform"
                     tools:text="Black Widow" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/year_text"
+                    style="@style/regularText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="12dp"
+                    android:textSize="16sp"
+                    tools:text="2021" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/year_text"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

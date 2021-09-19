@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/drawable/reviews_modal_top_rounded_background.xml" value="0.2236842105263158" />
         <entry key="app/src/main/res/drawable/rounded_search_layout.xml" value="0.5802083333333333" />
         <entry key="app/src/main/res/layout/activity_main_list.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_movie_details.xml" value="0.35843101893597834" />
+        <entry key="app/src/main/res/layout/activity_movie_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.5202397365154675" />
         <entry key="app/src/main/res/layout/fragment_reviews.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_cast.xml" value="0.33" />

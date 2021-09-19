@@ -53,7 +53,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         )
         setUpList(page = 1)
         setUpSearch()
-//        setUpSwipeToRefresh()
+        setUpSwipeToRefresh()
     }
 
     private fun setUpList(page: Int) {
@@ -94,13 +94,15 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
     }
 
     private fun setUpSwipeToRefresh() {
-//        binding?.swipeLayout?.setDistanceToTriggerSync(50)
-//        binding?.swipeLayout?.setOnRefreshListener {
-//            binding?.swipeLayout?.isRefreshing = true
-//            isSearchList = false
-//            binding?.popularTextLayout?.visibility = View.VISIBLE
-//            getNextPage(page = 1)
-//        }
+        binding?.swipeLayout?.setDistanceToTriggerSync(150)
+        binding?.swipeLayout?.setOnRefreshListener {
+            if (!isLoading) {
+                binding?.swipeLayout?.isRefreshing = true
+                isSearchList = false
+                binding?.popularTextLayout?.visibility = View.VISIBLE
+                getNextPage(page = 1)
+            }
+        }
     }
 
     private fun addOnScrollListener(page: Int) {
@@ -124,9 +126,9 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         } else {
             callSearchList(page = page)
         }
-//        if (binding?.swipeLayout?.isRefreshing == true) {
-//            binding?.swipeLayout?.isRefreshing = false
-//        }
+        if (binding?.swipeLayout?.isRefreshing == true) {
+            binding?.swipeLayout?.isRefreshing = false
+        }
     }
 
     private fun callPopularList(page: Int) {
