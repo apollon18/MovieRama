@@ -37,6 +37,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private var castAdapter: CastAdapter? = null
     private var similarMoviesAdapter: SimilarMoviesAdapter? = null
     private var genresAdapter: GenresAdapter? = null
+    private lateinit var reviewsFragment: ReviewsFragment
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase?.let { ViewPumpContextWrapper.wrap(it) })
@@ -190,11 +191,16 @@ class MovieDetailsActivity : AppCompatActivity() {
         } else {
             reviewsToShow.addAll(reviews)
         }
-        val reviewsModal = ReviewsFragment.getInstance(reviewsToShow)
+        reviewsFragment = ReviewsFragment.getInstance(reviewsToShow)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.reviews_container, reviewsModal)
+            .replace(R.id.reviews_container, reviewsFragment)
             .commit()
         GeneralUtils.slideFragmentUp(binding?.reviewsContainer)
+    }
+
+    fun closeReviewsModal() {
+        GeneralUtils.slideFragmentDown(binding?.reviewsContainer)
+
     }
 
     private fun hideReviewsUi() {

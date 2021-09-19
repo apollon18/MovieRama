@@ -48,7 +48,7 @@ class ReviewsFragment : Fragment() {
 
     private fun initCloseButton() {
         binding?.modalCloseButton?.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            (activity as MovieDetailsActivity)?.let { it.closeReviewsModal() }
         }
     }
 

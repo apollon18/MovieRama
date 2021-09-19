@@ -78,7 +78,7 @@ class GeneralUtils {
             view?.let {
                 view.visibility = View.VISIBLE
                 val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
-                animate.duration = 200L
+                animate.duration = 700L
                 animate.interpolator = DecelerateInterpolator()
                 animate.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {
@@ -86,6 +86,22 @@ class GeneralUtils {
                     }
 
                     override fun onAnimationEnd(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                })
+                view.startAnimation(animate)
+            }
+        }
+
+        fun slideFragmentDown(view: FrameLayout?) {
+            view?.let {
+                val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
+                animate.duration = 500L
+                animate.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationEnd(animation: Animation?) {
+                        view.visibility = View.GONE
+                    }
+
                     override fun onAnimationRepeat(animation: Animation?) {}
                 })
                 view.startAnimation(animate)
