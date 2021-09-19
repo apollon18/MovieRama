@@ -184,7 +184,17 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun openReviewsModal() {
-
+        val reviewsToShow = ArrayList<ReviewModel>()
+        if (reviews.size >= 2) {
+            reviewsToShow.addAll(reviews.subList(0, 2))
+        } else {
+            reviewsToShow.addAll(reviews)
+        }
+        val reviewsModal = ReviewsFragment.getInstance(reviewsToShow)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.reviews_container, reviewsModal)
+            .commit()
+        GeneralUtils.slideFragmentUp(binding?.reviewsContainer)
     }
 
     private fun hideReviewsUi() {

@@ -1,6 +1,11 @@
 package apo.mor.movierama.Utils
 
 import android.content.Context
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.TranslateAnimation
+import android.widget.FrameLayout
 import apo.mor.movierama.Models.Cast
 
 import apo.mor.movierama.R
@@ -67,6 +72,24 @@ class GeneralUtils {
             val df = DecimalFormat("#.#")
             df.roundingMode = RoundingMode.CEILING
             return df.format(rating).toDouble()
+        }
+
+        fun slideFragmentUp(view: FrameLayout?) {
+            view?.let {
+                view.visibility = View.VISIBLE
+                val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
+                animate.duration = 200L
+                animate.interpolator = DecelerateInterpolator()
+                animate.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {
+
+                    }
+
+                    override fun onAnimationEnd(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                })
+                view.startAnimation(animate)
+            }
         }
     }
 }
