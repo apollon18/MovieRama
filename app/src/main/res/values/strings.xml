@@ -14,6 +14,7 @@
     <string name="see_all_reviews_text">See all reviews</string>
     <string name="cast_title">Top Billed Cast</string>
     <string name="similar_movies_title">Similar Movies</string>
+    <string name="no_reviews_text">No reviews</string>
 
     <string name="reviews_title">Movie Reviews</string>
     <string name="reviews_close">Close</string>

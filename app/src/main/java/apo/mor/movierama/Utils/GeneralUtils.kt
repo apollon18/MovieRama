@@ -82,7 +82,7 @@ class GeneralUtils {
                 animate.interpolator = DecelerateInterpolator()
                 animate.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {
-
+                        view.visibility = View.VISIBLE
                     }
 
                     override fun onAnimationEnd(animation: Animation?) {}

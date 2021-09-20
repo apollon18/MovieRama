@@ -3,7 +3,6 @@ package apo.mor.movierama.Activities
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import apo.mor.movierama.Adapters.CastAdapter
@@ -182,12 +181,12 @@ class MovieDetailsActivity : AppCompatActivity() {
                 if (reviews.isNotEmpty()) {
                     updateReviewsUi()
                 } else {
-                    hideReviewsUi()
+                    noReviewsUi()
                 }
             }
 
             override fun onFailure(call: Call<ReviewResult>, t: Throwable) {
-                hideReviewsUi()
+                noReviewsUi()
             }
         })
     }
@@ -205,18 +204,17 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
         reviewsFragment = ReviewsFragment.getInstance(reviewsToShow)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.reviews_container, reviewsFragment)
+            .replace(R.id.container, reviewsFragment)
             .commit()
-        GeneralUtils.slideFragmentUp(binding?.reviewsContainer)
+        GeneralUtils.slideFragmentUp(binding?.container)
     }
 
     fun closeReviewsModal() {
-        GeneralUtils.slideFragmentDown(binding?.reviewsContainer)
-
+        GeneralUtils.slideFragmentDown(binding?.container)
     }
 
-    private fun hideReviewsUi() {
-        binding?.reviewsText?.visibility = View.GONE
+    private fun noReviewsUi() {
+        binding?.reviewsText?.text = resources.getString(R.string.no_reviews_text)
         binding?.reviewsCard?.setOnClickListener(null)
     }
 
