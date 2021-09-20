@@ -57,7 +57,7 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         )
         setUpList(page = 1)
         setUpSearch()
-        setUpSwipeToRefresh()
+        setUpReloadItButton()
     }
 
     private fun setUpList(page: Int) {
@@ -106,16 +106,15 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
         }
     }
 
-    private fun setUpSwipeToRefresh() {
-        binding?.swipeLayout?.setDistanceToTriggerSync(150)
-        binding?.swipeLayout?.setOnRefreshListener {
+    private fun setUpReloadItButton() {
+        binding?.reloadButton?.setOnClickListener {
             if (!isLoading) {
-                binding?.swipeLayout?.isRefreshing = true
                 isSearchList = false
                 binding?.popularTextLayout?.visibility = View.VISIBLE
                 if (binding?.searchText?.text?.isNotEmpty() == true) {
                     binding?.searchText?.text?.clear()
                 } else {
+                    binding?.loadingLayout?.root?.visibility = View.VISIBLE
                     getNextPage(page = 1)
                 }
             }
@@ -131,6 +130,11 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                         getNextPage(page = nextPage)
                     }
                 }
+                if (scrollY == 0) {
+                    binding?.reloadButton?.visibility = View.GONE
+                } else {
+                    binding?.reloadButton?.visibility = View.VISIBLE
+                }
             }
         })
     }
@@ -142,9 +146,6 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
             callPopularList(page = page)
         } else {
             callSearchList(page = page)
-        }
-        if (binding?.swipeLayout?.isRefreshing == true) {
-            binding?.swipeLayout?.isRefreshing = false
         }
     }
 
@@ -162,11 +163,13 @@ class MainListActivity : AppCompatActivity(), MovieListListener {
                     addOnScrollListener(page = page)
                 }
                 binding?.progressBar?.visibility = View.GONE
+                binding?.loadingLayout?.root?.visibility = View.GONE
                 isLoading = false
             }
 
             override fun onFailure(call: Call<ResultModel>, t: Throwable) {
                 binding?.progressBar?.visibility = View.GONE
+                binding?.loadingLayout?.root?.visibility = View.GONE
                 isLoading = false
             }
         })

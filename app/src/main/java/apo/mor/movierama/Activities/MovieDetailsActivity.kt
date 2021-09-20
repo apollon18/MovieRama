@@ -97,8 +97,10 @@ class MovieDetailsActivity : AppCompatActivity() {
             binding?.collapsingToolbarLayout?.let {
                 if (it.height + verticalOffset < it.scrimVisibleHeightTrigger) {
                     binding?.movieTitleToolbar?.animate()?.alpha(1f)?.duration = 1000
+                    binding?.closeButton?.setImageDrawable(resources.getDrawable(R.drawable.back_arrow_toolbar))
                 } else {
                     binding?.movieTitleToolbar?.animate()?.alpha(0f)?.duration = 100
+                    binding?.closeButton?.setImageDrawable(resources.getDrawable(R.drawable.back_arrow))
                 }
             }
         })
