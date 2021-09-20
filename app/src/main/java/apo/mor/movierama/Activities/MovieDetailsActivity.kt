@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.appbar.AppBarLayout
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,9 +48,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         movieId = intent.getStringExtra("id")
         if (movieId?.isEmpty() == true) {
@@ -86,11 +84,25 @@ class MovieDetailsActivity : AppCompatActivity() {
         binding?.movieTitleText?.text = movieDetails?.title
         binding?.ratingNumber?.text = movieDetails?.vote_average.toString()
         binding?.movieDescription?.text = movieDetails?.overview
+        setToolBarTitle()
         setMoviePoster()
         setMovieCast()
         setMovieGenres()
         setFavoriteStatus()
         binding?.loadingLayout?.root?.visibility = View.GONE
+    }
+
+    private fun setToolBarTitle() {
+        binding?.movieTitleToolbar?.text = movieDetails?.title
+        binding?.appBarLayout?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            binding?.collapsingToolbarLayout?.let {
+                if (it.height + verticalOffset < it.scrimVisibleHeightTrigger) {
+                    binding?.movieTitleToolbar?.animate()?.alpha(1f)?.duration = 1000
+                } else {
+                    binding?.movieTitleToolbar?.animate()?.alpha(0f)?.duration = 100
+                }
+            }
+        })
     }
 
     private fun setMoviePoster() {
