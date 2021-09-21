@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MovieRama</string>
+
+    <string name="main_header_morning">Good Morning</string>
+    <string name="main_header_afternoon">Good Afternoon</string>
+    <string name="main_header_evening">Good Evening</string>
+    <string name="main_popular_title">Popular</string>
+    <string name="main_popular_subtitle">Highly-rated, highly-anticipated and most watched movies to discover.</string>
+    <string name="main_search_hint">Search for movies by name…</string>
+
+    <string name="add_to_favorites_text">Add to Favorites</string>
+    <string name="added_to_favorites_text">Added to Favorites</string>
+
+    <string name="see_all_reviews_text">See all reviews</string>
+    <string name="cast_title">Top Billed Cast</string>
+    <string name="similar_movies_title">Similar Movies</string>
+    <string name="no_reviews_text">No reviews</string>
+
+    <string name="reviews_title">Movie Reviews</string>
+    <string name="reviews_close">Close</string>
+</resources>
